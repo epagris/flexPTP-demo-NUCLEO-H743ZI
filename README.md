@@ -21,7 +21,7 @@ Still not clear what is it useful for? No worries, it's a behind-the-scenes supp
 > To acquire the full source tree after cloning the repo, please fetch the linked *submodules* as well:
 
 ```
-git clone https://gitea.epagris.com/epagris/flexPTP-demo-NUCLEO-H743ZI2.git
+git clone https://github.com/epagris/flexPTP-demo-NUCLEO-H743ZI
 cd flexPTP-demo-NUCLEO-H743ZI2
 git submodule init
 git submodule update
@@ -192,7 +192,7 @@ ptp priority [<p1> <p2>]                           Print or set clock priority f
 
 ## License
 
-The project is created by András Wiesner (Epagris) in 2025 and published under the MIT license. Contributions are welcome! :)
+The project was created by András Wiesner (Epagris) in 2025 and published under the MIT license. Contributions are welcome! :)
 
 
 
