@@ -68,6 +68,8 @@ typedef struct {
             uint32_t ts_ns; // timestamp nanoseconds
         } tx;
     } data;
+    ETHHW_DescFull * bd; // associated normal descriptor
+    ETHHW_DescFull * bd_ctx; // associated context descriptor
 } ETHHW_EventDesc;
 
 #define ETHHW_RET_RX_PROCESSED (1)
@@ -88,6 +90,7 @@ void ETHHW_Start(ETH_TypeDef *eth);
 void ETHHW_Transmit(ETH_TypeDef *eth, const uint8_t *buf, uint16_t len, uint8_t txOpts, void *txOptArgs);
 
 void ETHHW_ProcessRx(ETH_TypeDef *eth);
+void ETHHW_RestoreRXDesc(ETHHW_DescFull *bd);
 
 void ETHHW_SetLinkProperties(ETH_TypeDef *eth, bool fastEthernet, bool fullDuplex);
 

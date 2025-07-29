@@ -1,6 +1,6 @@
 [submodule "Modules/embfmt"]
 	path = Modules/embfmt
-	url = https://gitea.epagris.com/epagris/embfmt
+	url = https://github.com/epagris/embfmt
 [submodule "Modules/lwip"]
 	path = Modules/lwip
 	url = https://github.com/lwip-tcpip/lwip.git

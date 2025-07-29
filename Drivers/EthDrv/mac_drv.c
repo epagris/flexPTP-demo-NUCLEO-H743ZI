@@ -225,7 +225,11 @@ ETHHW_DescFull *ETHHW_AdvanceDesc(ETHHW_DescFull *start, uint16_t n, ETHHW_DescF
 #define ETHHW_DESC_PREV(s, n, p) ETHHW_AdvanceDesc((s), (n), (p), -1)
 #define ETHHW_DESC_NEXT(s, n, p) ETHHW_AdvanceDesc((s), (n), (p), 1)
 
-static void ETHHW_RestoreRXDesc(ETHHW_DescFull *bd) {
+void ETHHW_RestoreRXDesc(ETHHW_DescFull *bd) {
+    if (bd == NULL) {
+        return;
+    }
+
     bd->desc.DES0 = bd->ext.bufAddr;                                                          // store Buffer 1 address
     bd->desc.DES3 = 0 | ETH_DMARXNDESCRF_OWN | ETH_DMARXNDESCRF_IOC | ETH_DMARXNDESCRF_BUF1V; // set flags: OWN, IOC, BUF1V
 }
@@ -356,6 +360,7 @@ void ETHHW_ProcessRx(ETH_TypeDef *eth) {
         evt.type = ETHHW_EVT_RX_READ;
         evt.data.rx.size = (bd->desc.DES3) & 0x3FFF;
         evt.data.rx.payload = (void *)bd->ext.bufAddr;
+        evt.bd = bd;
 
         // check if a timestamp had been captured for the packet as well
         bool tsFound = bd->desc.DES1 & ETH_DMARXNDESCWBF_TSA;
@@ -369,6 +374,8 @@ void ETHHW_ProcessRx(ETH_TypeDef *eth) {
             // step next bd further
             bd_next = ETHHW_DESC_NEXT(ring, ringLen, bd_next);
         }
+
+        evt.bd_ctx = ctx_bd;
 
         int ret = ETHHW_ReadCallback(&evt);
         if (ret == ETHHW_RET_RX_PROCESSED) {
